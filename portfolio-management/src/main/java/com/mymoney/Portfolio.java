@@ -6,7 +6,7 @@ import java.time.Month;
 public class Portfolio {
 
   private boolean isSIPActivated = false;
-  private HashMap<Month,Asset> assetsMap ;
+  private HashMap<Month,Asset> assetStore ;
   private Asset sipAsset ;
   private Asset primaryAsset;
 
@@ -15,9 +15,9 @@ public class Portfolio {
   private float goldShare = 0.00f;
 
   public Portfolio(HashMap<Asset_Type,String> assetMap){
-      assetsMap = new HashMap<Month,Asset>();
+      assetStore = new HashMap<Month,Asset>();
       PortfolioHandler.allocateAsset(this,Month.JANUARY, assetMap);
-      Asset asset = assetsMap.get(Month.JANUARY);
+      Asset asset = assetStore.get(Month.JANUARY);
       this.primaryAsset = asset;
       this.equityShare = (asset.getEquityValue()*100f/asset.getTotalAssetValue());
       this.debtShare = (asset.getDebtValue()*100f/asset.getTotalAssetValue());
@@ -39,7 +39,7 @@ public class Portfolio {
   }
 
   public boolean addAsset(Month month,Asset asset){
-      this.assetsMap.put(month,asset);
+      this.assetStore.put(month,asset);
       return false;
   }
 
@@ -60,7 +60,7 @@ public class Portfolio {
   }
 
   public Asset getAsset(Month month){
-    return this.assetsMap.get(month);
+    return this.assetStore.get(month);
   }
 
   public Asset getSIPAsset(){
@@ -68,12 +68,12 @@ public class Portfolio {
   }
 
   public int getTotalAssetSize(){
-    return this.assetsMap.size();
+    return this.assetStore.size();
   }
 
   @Override
   public String toString() {
-    return assetsMap.toString();
+    return assetStore.toString();
   }
 
 }
